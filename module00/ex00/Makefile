@@ -1,4 +1,4 @@
-CC = gcc
+CC = g++
 FLAGS = -g -Wall -Wextra -Werror -std=c++98
 
 NAME = megaphone
