@@ -2,9 +2,12 @@
 # define CONTACTPHONEBOOK_H
 
 #include <string>
+#include <cstdlib>
 #include <iostream>
 #include <iomanip>
 #include <string_view>
+#include <limits>
+#include <sstream>
 
 #define MAX_CONTACTS_NUM 3
 

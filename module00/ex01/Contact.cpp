@@ -46,15 +46,15 @@ std::string Contact::getDarkestSecret(void) const
 
 bool	Contact::checkInput(std::string input, bool isNumber)
 {
-	if (input.length() == 0)
+	if (input.empty())
 	{
-		std::cout << "This field can't be left empty!" << input.length() << input << std::endl;
+		std::cout << "This field can't be left empty!" << std::endl;
 		std::cin.clear();
 		return (false);
 	}
 	for (int i = 0; i < (int)input.length(); i++)
 	{
-		if (isNumber && ! std::isdigit(input[i]))
+		if (isNumber && !std::isdigit(input[i]))
 		{
 			std::cout << "Please enter a number!" << std::endl;
 			return (false);
@@ -70,7 +70,9 @@ std::string	Contact::_getUserInput(std::string prompt)
 	while (1)
 	{
 		std::cout << prompt;
-		std::cin >> input;
+		std::getline(std::cin, input);
+		if (std::cin.eof())
+			exit(1) ;
 		if (this->checkInput(input, prompt == "Phone number: "))
 			break ;
 		std::cout << std::endl;
