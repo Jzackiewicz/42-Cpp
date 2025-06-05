@@ -44,22 +44,49 @@ std::string Contact::getDarkestSecret(void) const
 	return this->_darkestSecret;
 }
 
-bool	Contact::checkInput(std::string input, bool isNumber)
+bool	Contact::_isEmpty(std::string input)
 {
+	bool	is_char;
+
 	if (input.empty())
 	{
 		std::cout << "This field can't be left empty!" << std::endl;
-		std::cin.clear();
-		return (false);
+		return (true);
 	}
+	is_char = false;
 	for (int i = 0; i < (int)input.length(); i++)
 	{
-		if (isNumber && !std::isdigit(input[i]))
+		if (!is_char && !std::isspace(input[i]))
+			is_char = true;
+	}
+	if (is_char)
+		return (false);
+	else
+	{
+		std::cout << "This field can't be left empty!" << std::endl;
+		return (true);
+	}
+}
+
+bool	Contact::_isNumber(std::string input)
+{
+	for (int i = 0; i < (int)input.length(); i++)
+	{
+		if (!std::isdigit(input[i]))
 		{
-			std::cout << "Please enter a number!";
+			std::cout << "Please enter a number!" << std::endl;
 			return (false);
 		}
 	}
+	return (true);
+}
+
+bool	Contact::checkInput(std::string input, bool isNumber)
+{
+	if (this->_isEmpty(input))
+		return (false);
+	if (isNumber && !this->_isNumber(input))
+		return (false);
 	return (true);
 }
 
@@ -70,14 +97,11 @@ std::string	Contact::_getUserInput(std::string prompt)
 	while (1)
 	{
 		std::cout << prompt;
-		// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		if (!std::getline(std::cin, input))
 			exit(1) ;
 		if (this->checkInput(input, prompt == "Phone number: "))
-			break ;
-		std::cout << std::endl;
+			return (input);
 	}
-	return (input);
 }
 
 void	Contact::setContactInfo(void)

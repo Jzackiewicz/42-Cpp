@@ -9,7 +9,7 @@
 #include <limits>
 #include <sstream>
 
-#define MAX_CONTACTS_NUM 3
+#define MAX_CONTACTS_NUM 8
 
 class	Contact
 {
@@ -19,6 +19,8 @@ class	Contact
 		std::string	_nickname;
 		std::string	_phoneNumber;
 		std::string	_darkestSecret;
+		bool		_isEmpty(std::string input);
+		bool		_isNumber(std::string input);
 		std::string	_getUserInput(std::string prompt);
 
 	public:
@@ -49,7 +51,6 @@ class PhoneBook
 		PhoneBook(void);
 		~PhoneBook(void);
 
-		void	run(void);
 		void	add(void);
 		void	search(void);
 };

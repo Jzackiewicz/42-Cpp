@@ -10,7 +10,7 @@ PhoneBook::~PhoneBook(void)
 	;
 }
 
-void PhoneBook::add(void)
+void	PhoneBook::add(void)
 {
 	Contact new_contact;
 
@@ -23,45 +23,33 @@ void PhoneBook::add(void)
 	this->_contact_num++;
 }
 
-void PhoneBook::search()
+void	PhoneBook::search()
 {
 	std::string	input;
 	int			index;
 
-	for (int i = 0; i < MAX_CONTACTS_NUM; i++)
+	if (!this->_contact_num)
 	{
+		std::cout << "Nothing to show." << std::endl;
+		return ;
+	}
+	for (int i = 0; i < this->_contact_num && i < MAX_CONTACTS_NUM; i++)
 		this->_contacts[i].printContact();
-	}
-	std::cout << "Enter an index: ";
-	std::cin >> input;
-	if (this->_contacts[0].checkInput(input, true))
+	while (1)
 	{
-		std::istringstream(input) >> index;
-		if (index < MAX_CONTACTS_NUM && index >= 0 && index < this->_contact_num)
-			this->_contacts[index].printContact();
-		else
-			std::cout << "Index out of bound!" << std::endl;
-	}
-}
-
-void PhoneBook::run(void)
-{
-	std::string command;
-
-	while (true)
-	{
-		std::cout << "Enter command: ";
-		// std::cin >> command;
-		// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		if (!std::getline(std::cin, command))
+		std::cout << "Enter an index: ";
+		if (!std::getline(std::cin, input))
 			exit(1) ;
-		if (command == "ADD")
-			this->add();
-		else if (command == "SEARCH")
-			this->search();
-		else if (command == "EXIT")
-			break;
-		else if (!command.empty())
-			std::cout << "Invalid command!" << std::endl;
+		if (this->_contacts[0].checkInput(input, true))
+		{
+			std::istringstream(input) >> index;
+			if (index < MAX_CONTACTS_NUM && index >= 0 && index < this->_contact_num)
+			{
+				this->_contacts[index].printContact();
+				break ;
+			}
+			else
+				std::cout << "Index out of bound!" << std::endl;
+		}
 	}
 }

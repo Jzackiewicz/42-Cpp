@@ -3,10 +3,23 @@
 
 int	main(void)
 {
-	// Contact ex_contact("Bob", "Budowniczy", "Bobik", "312312312", "Nie zawsze daje radę");
-	PhoneBook pb;
+	std::string command;
+	PhoneBook	pb;
 
-	pb.run();
-	
+	while (true)
+	{
+		std::cout << "Enter command: ";
+
+		if (!std::getline(std::cin, command))
+			break ;
+		if (command == "ADD")
+			pb.add();
+		else if (command == "SEARCH")
+			pb.search();
+		else if (command == "EXIT")
+			break;
+		else if (!command.empty())
+			std::cout << "Invalid command!" << std::endl;
+	}
 	return (0);
 }
