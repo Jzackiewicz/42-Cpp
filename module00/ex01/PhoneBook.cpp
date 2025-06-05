@@ -51,10 +51,10 @@ void PhoneBook::run(void)
 	while (true)
 	{
 		std::cout << "Enter command: ";
-		std::cin >> command;
-
-		if (std::cin.eof())
-			break;
+		// std::cin >> command;
+		// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		if (!std::getline(std::cin, command))
+			exit(1) ;
 		if (command == "ADD")
 			this->add();
 		else if (command == "SEARCH")

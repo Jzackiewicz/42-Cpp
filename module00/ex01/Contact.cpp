@@ -56,7 +56,7 @@ bool	Contact::checkInput(std::string input, bool isNumber)
 	{
 		if (isNumber && !std::isdigit(input[i]))
 		{
-			std::cout << "Please enter a number!" << std::endl;
+			std::cout << "Please enter a number!";
 			return (false);
 		}
 	}
@@ -70,8 +70,8 @@ std::string	Contact::_getUserInput(std::string prompt)
 	while (1)
 	{
 		std::cout << prompt;
-		std::getline(std::cin, input);
-		if (std::cin.eof())
+		// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		if (!std::getline(std::cin, input))
 			exit(1) ;
 		if (this->checkInput(input, prompt == "Phone number: "))
 			break ;
