@@ -83,9 +83,9 @@ bool	Contact::_isNumber(std::string input)
 
 bool	Contact::checkInput(std::string input, bool isNumber)
 {
-	if (this->_isEmpty(input))
+	if (_isEmpty(input))
 		return (false);
-	if (isNumber && !this->_isNumber(input))
+	if (isNumber && !_isNumber(input))
 		return (false);
 	return (true);
 }

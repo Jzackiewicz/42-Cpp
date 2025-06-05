@@ -19,8 +19,8 @@ class	Contact
 		std::string	_nickname;
 		std::string	_phoneNumber;
 		std::string	_darkestSecret;
-		bool		_isEmpty(std::string input);
-		bool		_isNumber(std::string input);
+		static bool	_isEmpty(std::string input);
+		static bool	_isNumber(std::string input);
 		std::string	_getUserInput(std::string prompt);
 
 	public:
@@ -37,7 +37,7 @@ class	Contact
 		std::string getPhoneNumber(void) const;
 		std::string getDarkestSecret(void) const;
 
-		bool		checkInput(std::string input, bool is_number);
+		static bool	checkInput(std::string input, bool is_number);
 		void		printContact(void);
 };
 

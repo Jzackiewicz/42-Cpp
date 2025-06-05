@@ -40,7 +40,7 @@ void	PhoneBook::search()
 		std::cout << "Enter an index: ";
 		if (!std::getline(std::cin, input))
 			exit(1) ;
-		if (this->_contacts[0].checkInput(input, true))
+		if (Contact::checkInput(input, true))
 		{
 			std::istringstream(input) >> index;
 			if (index < MAX_CONTACTS_NUM && index >= 0 && index < this->_contact_num)
