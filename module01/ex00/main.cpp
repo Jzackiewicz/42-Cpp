@@ -1,8 +1,14 @@
 #include "Zombie.hpp"
+#include "Zombie.h"
 
 int main(void)
 {
-	Zombie zomb("dupa");
+	Zombie *zomb;
 
-	zomb.randomChump("test");
+	zomb = newZombie("test2");
+	randomChump("test");
+
+	delete zomb;
+
+	return (0);
 }
