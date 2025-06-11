@@ -1,19 +1,18 @@
 CC = g++
-FLAGS = -g -Wall -Wextra -Werror -std=c++98
+CFLAGS = -g -Wall -Wextra -Werror -std=c++98
 
-NAME = zombie
+NAME = weapon
 
-SRCS = *.cpp
-
+SRCS = $(wildcard *.cpp)
 OBJ_DIR = obj
-OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
+OBJS = $(patsubst %.cpp,$(OBJ_DIR)/%.o,$(SRCS))
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
-$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
