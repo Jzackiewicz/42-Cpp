@@ -7,7 +7,7 @@ class Fixed
 {
 	private:
 		int	_value;
-		int _binaryPointPosition;
+		int _fractionalBits;
 
 	public:
 		Fixed(void);
