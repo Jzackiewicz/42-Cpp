@@ -22,13 +22,13 @@ Fixed::Fixed(float value)
 	this->_value = static_cast<int>(std::floor((value * (1 << this->_fractionalBits)) + 0.5));
 }
 
-Fixed::Fixed(const Fixed& obj)
+Fixed::Fixed(const Fixed &obj)
 {
 	std::cout << "Copy constructor called" << std::endl;
 	*this = obj;
 }
 
-Fixed	&Fixed::operator=(const Fixed& obj)
+Fixed	&Fixed::operator=(const Fixed &obj)
 {
 	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &obj)
@@ -66,7 +66,7 @@ int		Fixed::toInt(void) const
 	return (this->_value >> this->_fractionalBits);
 }
 
-std::ostream&	operator<<(std::ostream& os, const Fixed& fixed)
+std::ostream	&operator<<(std::ostream &os, const Fixed &fixed)
 {
 	os << fixed.toFloat();
 	return (os);
