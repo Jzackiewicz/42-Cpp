@@ -13,7 +13,7 @@ bool    checkTriangle(Point const &a, Point const &b, Point const &c)
         return (true);
 }
 
-bool bsp( Point const a, Point const b, Point const c, Point const point)
+bool bsp( Point const a, Point czonst b, Point const c, Point const point)
 {
     Point abNormalVector(a)
 }
