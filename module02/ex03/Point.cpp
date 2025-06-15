@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Point.hpp"
 
 Point::Point(void)
@@ -32,4 +30,14 @@ Point	&Point::operator=(const Point& obj)
 Point::~Point(void)
 {
 	;
+}
+
+Fixed	Point::getX(void) const
+{
+	return (this->_x);
+}
+
+Fixed	Point::getY(void) const
+{
+	return (this->_y);
 }
