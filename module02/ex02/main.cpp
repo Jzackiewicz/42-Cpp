@@ -93,22 +93,63 @@ void test_output_operator() {
     std::cout << "Operator << : Expected approx: 12.0133 | Got: " << out << std::endl;
 }
 
+void test_min_max() {
+    std::cout << "\n== MIN/MAX STATIC FUNCTION TESTS ==" << std::endl;
+    Fixed a(3.5f);
+    Fixed b(7.25f);
+    Fixed c(-2.0f);
+
+    // Non-const min/max
+    Fixed &min_ab = Fixed::min(a, b);
+    Fixed &max_ab = Fixed::max(a, b);
+    Fixed &min_bc = Fixed::min(b, c);
+    Fixed &max_bc = Fixed::max(b, c);
+
+    printTest("min(a, b)", "3.5000", to_string_compat(min_ab.toFloat(), 4));
+    printTest("max(a, b)", "7.2500", to_string_compat(max_ab.toFloat(), 4));
+    printTest("min(b, c)", "-2.0000", to_string_compat(min_bc.toFloat(), 4));
+    printTest("max(b, c)", "7.2500", to_string_compat(max_bc.toFloat(), 4));
+
+    // Const min/max
+    const Fixed ca(1.1f);
+    const Fixed cb(2.2f);
+    const Fixed cc(-3.3f);
+
+    const Fixed &cmin_ab = Fixed::min(ca, cb);
+    const Fixed &cmax_ab = Fixed::max(ca, cb);
+    const Fixed &cmin_bc = Fixed::min(cb, cc);
+    const Fixed &cmax_bc = Fixed::max(cb, cc);
+
+    printTest("min(ca, cb)", "1.1000", to_string_compat(cmin_ab.toFloat(), 4));
+    printTest("max(ca, cb)", "2.2000", to_string_compat(cmax_ab.toFloat(), 4));
+    printTest("min(cb, cc)", "-3.3000", to_string_compat(cmin_bc.toFloat(), 4));
+    printTest("max(cb, cc)", "2.2000", to_string_compat(cmax_bc.toFloat(), 4));
+}
+
+void	run_tests(void)
+{
+	test_basic_values();
+    test_arithmetic_operations();
+    test_comparisons();
+    test_toInt_and_toFloat_rounding();
+    test_output_operator();
+	test_min_max();
+}
+
 int main()
 {
 	Fixed a;
 	Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+
 	std::cout << a << std::endl;
 	std::cout << ++a << std::endl;
 	std::cout << a << std::endl;
 	std::cout << a++ << std::endl;
 	std::cout << a << std::endl;
 	std::cout << b << std::endl;
+	
 	std::cout << Fixed::max( a, b ) << std::endl;
 
-    // test_basic_values();
-    // test_arithmetic_operations();
-    // test_comparisons();
-    // test_toInt_and_toFloat_rounding();
-    // test_output_operator();
+    // run_tests();
     return 0;
 }
