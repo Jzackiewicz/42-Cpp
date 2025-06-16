@@ -2,14 +2,23 @@
 
 int main()
 {
-    ClapTrap claptrap("CLTP");
+    ClapTrap bob("Bob");
+	ClapTrap rob("Rob");
 
-    claptrap.attack("target1");
-    claptrap.takeDamage(3);
-    claptrap.beRepaired(2);
-    claptrap.attack("target2");
-    claptrap.takeDamage(5);
-    claptrap.beRepaired(4);
-
+    bob.attack("Rob");
+    rob.takeDamage(3);
+    rob.beRepaired(4);
+    rob.attack("Bob");
+    bob.takeDamage(11);
+    bob.beRepaired(3);
+	rob.attack("Bob");
+	rob.attack("Bob");
+	rob.attack("Bob");
+	rob.attack("Bob");
+	rob.attack("Bob");
+	rob.attack("Bob");
+	rob.attack("Bob");
+	rob.attack("Bob");
+	rob.attack("Bob");
     return 0;
 }
