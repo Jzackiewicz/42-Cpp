@@ -1,15 +1,15 @@
 #include "Dog.hpp"
 
-Dog::Dog(void)
+Dog::Dog(void): Animal("Dawg")
 {
 	this->_type = "Dawg";
 	std::cout << "Dog " << this->_type << " created." << std::endl;;
 }
 
-Dog::Dog(const std::string &type)
+Dog::Dog(const std::string &type): Animal(type)
 {
-	std::cout << "Dog " << this->_type << " created." << std::endl;
 	this->_type = type;
+	std::cout << "Dog " << this->_type << " created." << std::endl;
 }
 
 Dog::Dog(const Dog& other)
@@ -20,11 +20,11 @@ Dog::Dog(const Dog& other)
 
 Dog	&Dog::operator=(const Dog& other)
 {
-	std::cout << "Dog " << this->_type << " assigned." << std::endl;
 	if (this != &other)
 	{
 		this->_type = other._type;
 	}
+	std::cout << "Dog " << this->_type << " assigned." << std::endl;
 	return (*this);
 }
 

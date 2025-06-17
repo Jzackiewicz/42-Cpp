@@ -8,24 +8,24 @@ Animal::Animal(void)
 
 Animal::Animal(const std::string &type)
 {
-	std::cout << "Animal " << this->_type << " created." << std::endl;
 	this->_type = type;
+	std::cout << "Animal " << this->_type << " created." << std::endl;
 }
 
 Animal::Animal(const Animal &other)
 {
-	std::cout << "Animal " << this->_type << " copied." << std::endl;
 	this->_type = other._type;
 	*this = other;
+	std::cout << "Animal " << this->_type << " copied." << std::endl;
 }
 
 Animal	&Animal::operator=(const Animal &other)
 {
-	std::cout << "Animal " << this->_type << " assigned." << std::endl;
 	if (this != &other)
 	{
 		this->_type = other._type;
 	}
+	std::cout << "Animal " << this->_type << " assigned." << std::endl;
 	return (*this);
 }
 
