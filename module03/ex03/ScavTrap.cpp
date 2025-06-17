@@ -2,6 +2,14 @@
 #include <iostream>
 #include <string>
 
+ScavTrap::ScavTrap(void): ClapTrap()
+{
+	this->_hitPoints = _initHitPoints;
+	this->_energyPoints = _initEnergyPoints;
+	this->_attackDamage = _initAttackDamage;
+	std::cout << "ScavTrap " << this->_name << " created." << std::endl;
+}
+
 ScavTrap::ScavTrap(const std::string name): ClapTrap(name)
 {
 	this->_hitPoints = 100;

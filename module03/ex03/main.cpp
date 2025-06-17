@@ -6,6 +6,8 @@
 int main(void)
 {
     DiamondTrap bobixon("Bobixon");
+	DiamondTrap robixon(bobixon);
+
 
 	bobixon.attack("Rob");
 	bobixon.takeDamage(5);
@@ -13,5 +15,7 @@ int main(void)
 	bobixon.highFivesGuys();
 	bobixon.guardGate();
 	bobixon.whoAmI();
-    return 0;
+	bobixon = DiamondTrap("Robixon");
+	bobixon.whoAmI();
+	return 0;
 }
