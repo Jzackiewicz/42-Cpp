@@ -43,3 +43,14 @@ void	Animal::makeSound(void) const
 {
 	std::cout << "Animal " << this->_type << " made a sound" << std::endl;
 }
+
+void	Animal::thinkAbout(std::string idea, unsigned int idx)
+{
+	(void)idea;
+	(void)idx;
+}
+
+void	Animal::showThoughts(void) const
+{
+	;
+}

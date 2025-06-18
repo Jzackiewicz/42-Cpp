@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Animal.hpp"
+#include "Brain.hpp"
 
 class Dog: public Animal
 {
 	private:
-	;
+		Brain	*_brain;
 	
 	public:
 		Dog(void);
@@ -14,6 +15,8 @@ class Dog: public Animal
 		Dog &operator=(const Dog &other);
 		virtual ~Dog();
 
-		void makeSound(void) const;
+		void	makeSound(void) const;
+		void	thinkAbout(std::string idea, unsigned int idx);
+		void	showThoughts(void) const;
 
 };
