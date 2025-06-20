@@ -8,6 +8,7 @@ class Character: public ICharacter
 	protected:
 		std::string	_name;
 		AMateria	*_inventory[4];
+		AMateria	*_floor[100];
 	
 	public:
 		Character(std::string const &name);
