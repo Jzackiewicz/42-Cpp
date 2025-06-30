@@ -2,7 +2,8 @@
 
 #include <iostream>
 #include <string>
-#include <iosfwd>
+#include <stdexcept>
+#include <cstdlib>
 
 class Bureaucrat
 {
@@ -16,8 +17,25 @@ class Bureaucrat
 		~Bureaucrat(void);
 		Bureaucrat &operator=(const Bureaucrat &other);
 
-		std::string	getName(void);
-		int			getGrade(void);
-}
+		void		incrementGrade(void);
+		void		decrementGrade(void);
+		
+		std::string	getName(void) const;
+		int			getGrade(void) const;
+		void		setGrade(int grade);
 
-std::ostream	&operator<<(std::ostream& os, const Bureaucrat& bureaucrat);
+		class GradeTooHighException : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
+
+		class GradeTooLowException : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
+
+};
+
+std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat);
