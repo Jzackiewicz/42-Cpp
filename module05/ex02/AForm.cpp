@@ -83,5 +83,5 @@ std::ostream &operator<<(std::ostream &os, const AForm &Aform)
 	os << "AForm: " << Aform.getName() << ", Signed: " << (Aform.getIsSigned() ? "Yes" : "No")
 	   << ", Sign Grade: " << Aform.getSignGrade()
 	   << ", Exec Grade: " << Aform.getExecGrade() << std::endl;
-	return os;
+	return (os);
 }

@@ -18,15 +18,11 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &o
 
 RobotomyRequestForm::~RobotomyRequestForm(void) {}
 
-const std::string &RobotomyRequestForm::getTarget(void) const
-{
-	return this->_target;
-}
-
 void RobotomyRequestForm::execute(const Bureaucrat &executor) const
 {
 	try
 	{
+		srand(std::time(0));
 		if (!this->getIsSigned())
 			throw FormNotSignedException();
 		if (executor.getGrade() > this->getExecGrade())

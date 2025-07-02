@@ -64,4 +64,6 @@ void ShrubberyCreationForm::execute(const Bureaucrat &executor) const
 	ofs << "     ~~~~~~~~~~~\n";
 
 	ofs.close();
+	std::cout << "\033[32m" << "Shrubbery created successfully in " << this->_target << "_shrubbery file." << "\033[0m" << std::endl;
 }
+

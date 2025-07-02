@@ -1,20 +1,26 @@
 #include "Bureaucrat.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main(void)
 {
-	Bureaucrat bureaucrat("John Doe", 1);
-	RobotomyRequestForm form("Home");
-	
+	Bureaucrat				bureaucrat("John Pork", 2);
+	ShrubberyCreationForm	shrubberyForm("krzak");
+	PresidentialPardonForm	pardonForm("sori");
+	RobotomyRequestForm		robotomyForm("rob");
+ 
 	std::cout << bureaucrat;
-	std::cout << form;
+	std::cout << shrubberyForm;
+	std::cout << pardonForm;
+	std::cout << robotomyForm;
 
-	bureaucrat.beSigned(form);
-	std::cout << "Incrementing bureaucrat's grade..." << std::endl;
-	std::cout << bureaucrat << std::endl;
-	bureaucrat.beSigned(form);
-	form.execute(bureaucrat);
-	std::cout << form << std::endl;
+	shrubberyForm.beSigned(bureaucrat);
+	pardonForm.beSigned(bureaucrat);
+	robotomyForm.beSigned(bureaucrat);
+
+	shrubberyForm.execute(bureaucrat);
+	pardonForm.execute(bureaucrat);
+	robotomyForm.execute(bureaucrat);
 	return (1);
 }

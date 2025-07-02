@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <ctime>
 
 class RobotomyRequestForm : public AForm
 {
@@ -17,7 +18,6 @@ class RobotomyRequestForm : public AForm
 		RobotomyRequestForm &operator=(const RobotomyRequestForm &other);
 		~RobotomyRequestForm(void);
 
-		const std::string &getTarget(void) const;
 		void execute(const Bureaucrat &executor) const;
 
 		class RobotomyFailedException : public std::exception
