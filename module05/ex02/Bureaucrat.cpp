@@ -112,3 +112,22 @@ std::ostream	&operator<<(std::ostream &os, const Bureaucrat &bureaucrat)
 	os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << std::endl;
 	return (os);
 }
+
+void Bureaucrat::executeForm(const AForm &AForm) const
+{
+	try
+	{
+		AForm.execute(*this);
+		std::cout << "\033[32m" << this->_name << " executed " << AForm.getName() << "\033[0m" << std::endl;
+	}
+	catch (const AForm::FormNotSignedException &e)
+	{
+		std::cerr << "\033[31m" << "Caught FormNotSignedException \033[0m[" << AForm.getName() << "]: \n" << e.what() << std::endl;
+		return;
+	}
+	catch (const AForm::GradeTooLowException &e)
+	{
+		std::cerr << "\033[31m" << "Caught GradeTooLowException \033[0m[" << AForm.getName() << "]: \n" << e.what() << std::endl;
+		return;
+	}
+}

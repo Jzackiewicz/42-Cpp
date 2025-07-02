@@ -19,8 +19,8 @@ int main(void)
 	pardonForm.beSigned(bureaucrat);
 	robotomyForm.beSigned(bureaucrat);
 
-	shrubberyForm.execute(bureaucrat);
-	pardonForm.execute(bureaucrat);
-	robotomyForm.execute(bureaucrat);
+	bureaucrat.executeForm(shrubberyForm);
+	bureaucrat.executeForm(pardonForm);
+	bureaucrat.executeForm(robotomyForm);
 	return (1);
 }
