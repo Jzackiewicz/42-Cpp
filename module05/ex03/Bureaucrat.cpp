@@ -149,3 +149,4 @@ void Bureaucrat::executeForm(const AForm &AForm) const
 		return;
 	}
 }
+

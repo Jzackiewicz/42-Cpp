@@ -23,6 +23,7 @@ void ShrubberyCreationForm::execute(const Bureaucrat &executor) const
 		throw AForm::FormNotSignedException();
 	if (executor.getGrade() > this->getExecGrade())
 		throw AForm::GradeTooLowException();
+
 	std::ofstream ofs((this->_target + "_shrubbery").c_str());
 	if (!ofs)
 	{
