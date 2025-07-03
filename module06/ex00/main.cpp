@@ -2,8 +2,10 @@
 
 int main (int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-
-	ScalarConverter::convert("2.0");
+	if (argc != 2)
+	{
+		std::cerr << "./converter <number>" << std::endl;
+		return (1);
+	}
+	ScalarConverter::convert(argv[1]);
 }

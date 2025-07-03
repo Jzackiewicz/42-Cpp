@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include <sstream>
+#include <limits>
 
 class ScalarConverter
 {
@@ -15,3 +15,9 @@ class ScalarConverter
 
 		static void convert(const std::string &literal);
 };
+
+bool	isNumber(const std::string &literal);
+void	printChar(const std::string &literal);
+void	printInt(const std::string &literal);
+void	printFloat(const std::string &literal);
+void	printDouble(const std::string &literal);
