@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <cstdint>
+#include <stdint.h>
 
 struct Data
 {
@@ -22,4 +22,3 @@ class Serializer
 		static uintptr_t serialize(Data *ptr);
 		static void *deserialize(uintptr_t raw);
 };
-
