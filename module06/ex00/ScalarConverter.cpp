@@ -1,5 +1,5 @@
 #include "ScalarConverter.hpp"
-
+#include <sstream>
 ScalarConverter::ScalarConverter() {}
 
 ScalarConverter::ScalarConverter(const ScalarConverter &other)
@@ -94,7 +94,9 @@ void	printFloat(const std::string &literal)
 		return;
 	}
 	std::cout << "float: " << value;
-	if (literal.find('.') == std::string::npos)
+	std::stringstream ss;
+	ss << value;
+	if (ss.str().find('.') == std::string::npos)
 		std::cout << ".0";
 	std::cout << "f" << std::endl;
 }
@@ -120,7 +122,9 @@ void	printDouble(const std::string &literal)
 		return;
 	}
 	std::cout << "double: " << value;
-	if (literal.find('.') == std::string::npos)
+	std::stringstream ss;
+	ss << value;
+	if (ss.str().find('.') == std::string::npos)
 		std::cout << ".0";
 	std::cout << std::endl;
 }
