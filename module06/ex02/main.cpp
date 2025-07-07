@@ -6,4 +6,9 @@ int main(void)
 	identify(randClass);
 	identify(*randClass);
 	delete (randClass);
+
+	D *d = new D();
+	identify(d);
+	identify(*d);
+	delete (d);
 }

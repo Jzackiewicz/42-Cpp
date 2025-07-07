@@ -30,6 +30,13 @@ class C: public Base
 		~C(void);
 };
 
+class D: public Base
+{
+	public:
+		D(void);
+		~D(void);
+};
+
 Base	*generate(void);
 void	identify(Base* p);
 void	identify(Base& p);

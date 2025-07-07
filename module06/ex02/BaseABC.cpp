@@ -23,6 +23,12 @@ C::C(void)
 }
 C::~C(void) {}
 
+D::D(void)
+{
+	std::cout << "\033[1m\033[35m D class created \033[0m" << std::endl;
+}
+D::~D(void) {}
+
 Base	*generate(void)
 {
 	srand(std::time(0));
@@ -47,7 +53,7 @@ void	identify(Base* p)
 	else if (dynamic_cast<C*>(p))
 		std::cout << "\033[32mThis is class C\033[0m";
 	else
-		std::cout << "Unknown class" << std::endl;
+		std::cout << "Unknown class";
 	std::cout << " - downcasting using pointers" << std::endl;
 }
 
@@ -59,23 +65,27 @@ void	identify(Base& p)
 		(void)a;
 		std::cout << "\033[34mThis is class A\033[0m";
 	}
-	catch (std::exception &e) {}
-
-	try
+	catch (std::exception &)
 	{
-		B &b = dynamic_cast<B&>(p);
-		(void)b;
-		std::cout << "\033[33mThis is class B\033[0m";
+		try
+		{
+			B &b = dynamic_cast<B&>(p);
+			(void)b;
+			std::cout << "\033[33mThis is class B\033[0m";
+		}
+		catch (std::exception &)
+		{
+			try
+			{
+				C &c = dynamic_cast<C&>(p);
+				(void)c;
+				std::cout << "\033[32mThis is class C\033[0m";
+			}
+			catch (std::exception &)
+			{
+				std::cout << "Unknown class";
+			}
+		}
 	}
-	catch (std::exception &e) {}
-
-	try
-	{
-		C &c = dynamic_cast<C&>(p);
-		(void)c;
-		std::cout << "\033[32mThis is class C\033[0m";
-	}
-	catch (std::exception &e) {}
-
 	std::cout << " - downcasting using references" << std::endl;
 }
