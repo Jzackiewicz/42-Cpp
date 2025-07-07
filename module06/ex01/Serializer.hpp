@@ -2,13 +2,13 @@
 
 #include <iostream>
 #include <stdint.h>
+#include <vector>
 
 struct Data
 {
-	char	c;
-	int		i;
-	float	f;
-	double	d;
+	std::string			str;
+	int					num;
+	std::vector<int>	set;
 };
 
 class Serializer

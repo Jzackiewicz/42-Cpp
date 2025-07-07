@@ -1,31 +1,45 @@
 #include "Serializer.hpp"
 #include <fstream>
 
+Data	create_data(void)
+{
+	Data	data;
+
+	data.str = "Example text";
+	data.num = 42;
+	data.set.push_back(3);
+	data.set.push_back(-4);
+	data.set.push_back(123125);
+	data.set.push_back(303);
+
+	return (data);
+}
+
+void	print_data(Data data)
+{
+	std::cout << "Str: " << data.str << std::endl;
+	std::cout << "Int: " << data.num << std::endl;
+	std::cout << "Set: " << data.set[0];
+	for (unsigned int i = 1; i < data.set.size(); i++)
+		std::cout << " | " << data.set[i]; 
+	std::cout << std::endl;
+}
+
 int main(void)
 {
-	Data data;
-	data.c = 'A';
-	data.i = 42;
-	data.f = 3.14f;
-	data.d = 2.718281828459045;
+	Data		data;
+	uintptr_t	raw;
 
-	uintptr_t raw = Serializer::serialize(&data);
-	Data *deserializedData = static_cast<Data *>(Serializer::deserialize(raw));
-
+	data = create_data();
 	std::cout << "Original Data:" << std::endl;
-	std::cout << "Char: " << data.c << std::endl;
-	std::cout << "Int: " << data.i << std::endl;
-	std::cout << "Float: " << data.f << std::endl;
-	std::cout << "Double: " << data.d << std::endl;
+	print_data(data);
 
-	std::ofstream file("savefile", std::ios::binary);
-	file.write(static_cast<std::string>(raw), sizeof(raw));
-	std::cout << "Serialized: " << raw << std::endl;
+	raw = Serializer::serialize(&data);
+	Data *deserializedData = static_cast<Data *>(Serializer::deserialize(raw));
+	std::cout << "\nSerialized: " << raw << std::endl;
+	
 	std::cout << "\nDeserialized Data:" << std::endl;
-	std::cout << "Char: " << deserializedData->c << std::endl;
-	std::cout << "Int: " << deserializedData->i << std::endl;
-	std::cout << "Float: " << deserializedData->f << std::endl;
-	std::cout << "Double: " << deserializedData->d << std::endl;
+	print_data(*deserializedData);
 
 	return 0;
 }
