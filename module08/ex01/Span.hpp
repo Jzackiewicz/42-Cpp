@@ -1,6 +1,8 @@
 #pragma once
 #include <algorithm>
 #include <vector>
+#include <stdexcept>
+#include <iostream>
 
 class Span
 {
@@ -12,12 +14,10 @@ class Span
 		Span(unsigned int n);
 		Span(const Span &other);
 		Span &operator=(const Span &other);
-		~Span();
+		~Span(void);
 
 		void addNumber(int number);
-		template <typename T>
-		void addNumbers(T begin, T end);
-
-		unsigned int shortestSpan() const;
-		unsigned int longestSpan() const;
+		void addNumbers(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end);
+		unsigned int shortestSpan(void) const;
+		unsigned int longestSpan(void) const;
 };
