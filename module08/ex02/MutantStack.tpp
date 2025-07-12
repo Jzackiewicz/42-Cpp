@@ -20,11 +20,11 @@ MutantStack<T>::~MutantStack(void) {}
 template <typename T>
 typename MutantStack<T>::iterator MutantStack<T>::begin(void)
 {
-    return (std::stack<T>::c.begin());
+    return (this->c.begin());
 }
 
 template <typename T>
 typename MutantStack<T>::iterator MutantStack<T>::end(void)
 {
-    return (std::stack<T>::c.end());
+    return (this->c.end());
 }
