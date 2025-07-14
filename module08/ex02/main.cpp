@@ -58,5 +58,6 @@ int main(void)
 	printList(lst);
 	lst.pop_back();
 	printList(lst);
+
 	return (0);
 }
