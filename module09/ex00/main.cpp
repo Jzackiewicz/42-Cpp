@@ -8,8 +8,7 @@ int	main(int argc, char **argv)
         std::cerr << "Usage: ./btc <input_file>" << std::endl;
         return (1);
     }
-	BitcoinExchange bitEx(argv[1]);
-
-	bitEx._calculateValues()
+	BitcoinExchange bitEx;
+	bitEx.calculateValues(argv[1]);
 	return (0);
 }
