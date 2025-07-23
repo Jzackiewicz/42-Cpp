@@ -24,12 +24,12 @@ void	BitcoinExchange::_loadExchangeRates(const char *filename)
 	std::ifstream	file(filename);
 	std::string		text;
 
-	if (!Validator::_checkFile(file))
+	if (!Validator::checkFile(file))
 		return ;
 	getline(file, text);
 	while (getline(file, text))
 	{
-		if (!Validator::_checkLine(text, ","))
+		if (!Validator::checkLine(text, ","))
 			continue ;
 		else
 			this->_rates.insert(BitcoinExchange::_extractPairFromLine(text, ","));
@@ -43,7 +43,7 @@ void	BitcoinExchange::calculateValues(const char *filename) const
 	std::string						text;
 	std::pair<std::string, float>	curPair;
 
-	if (!Validator::_checkFile(file))
+	if (!Validator::checkFile(file))
 		return ;
 	getline(file, text);
 	if (text != "date | value")
@@ -53,7 +53,7 @@ void	BitcoinExchange::calculateValues(const char *filename) const
 	}
 	while (getline(file, text))
 	{
-		if (!Validator::_checkLine(text, " | "))
+		if (!Validator::checkLine(text, " | "))
 			continue ;
 		else
 		{
@@ -89,10 +89,12 @@ std::pair<std::string, float> BitcoinExchange::_extractPairFromLine(const std::s
 	exchangeRate = line.substr(line.find(sep) + sep.length());
 	newPair.first = date;
 	newPair.second = static_cast<float>(std::atof(exchangeRate.c_str()));
+	if (line.find(sep) == std::string::npos)
+		newPair.second = 0.0f;
 	return (newPair);
 }
 
-bool	Validator::_checkDate(const std::string &date)
+bool	Validator::checkDate(const std::string &date)
 {
 	struct tm	tm;
 	
@@ -121,7 +123,7 @@ bool	Validator::_checkDate(const std::string &date)
 	return (true);
 }
 
-bool	Validator::_checkValue(const std::string &value)
+bool	Validator::checkValue(const std::string &value)
 {
 	float exchangeRateNum;
 
@@ -144,13 +146,13 @@ bool	Validator::_checkValue(const std::string &value)
 	return (true);
 }
 
-bool	Validator::_checkLine(const std::string &line, const std::string &sep)
+bool	Validator::checkLine(const std::string &line, const std::string &sep)
 {
 	std::string	date;
 	std::string	value;
 
 	date = line.substr(0, line.find(sep));
-	if (!Validator::_checkDate(date))
+	if (!Validator::checkDate(date))
 	{
 		std::cerr << "Error: bad input => " << date << std::endl;
 		return (false);
@@ -160,13 +162,13 @@ bool	Validator::_checkLine(const std::string &line, const std::string &sep)
 		value = "0";
 	if (sep == " | ")
 	{
-		if (!Validator::_checkValue(value))
+		if (!Validator::checkValue(value))
 			return (false);
 	}
 	return (true);
 }
 
-bool	Validator::_checkFile(std::ifstream &file)
+bool	Validator::checkFile(std::ifstream &file)
 {
 	if (!file.good())
 	{

@@ -13,7 +13,7 @@ class BitcoinExchange
 		float		_getClosestDateRate(const std::string &date) const;
 		static std::pair<std::string, float> _extractPairFromLine(const std::string &line, const std::string &sep);
 		
-		public:
+	public:
 		BitcoinExchange(void);
 		~BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange &other);
@@ -33,8 +33,8 @@ class Validator
 		Validator &operator=(const Validator &other);
 	
 	public:
-		static bool	_checkDate(const std::string &date);
-		static bool	_checkValue(const std::string &value);
-		static bool	_checkLine(const std::string &line, const std::string &sep);
-		static bool	_checkFile(std::ifstream &file);
+		static bool	checkDate(const std::string &date);
+		static bool	checkValue(const std::string &value);
+		static bool	checkLine(const std::string &line, const std::string &sep);
+		static bool	checkFile(std::ifstream &file);
 };
