@@ -20,6 +20,7 @@ PmergeMe::PmergeMe(const PmergeMe &other)
 	this->_vec = other._vec;
 	this->_deq = other._deq;
 }
+
 PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
 	if (this != &other)
