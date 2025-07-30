@@ -12,8 +12,10 @@ class PmergeMe
 		std::vector<int>	_vec;
 		std::deque<int>		_deq;
 
-		int		loadArgument(const std::string &arg);
-		void	parseArguments(int argc, char **argv);
+		int			loadArgument(const std::string &arg);
+		void		parseArguments(int argc, char **argv);
+		
+		static int	getJacobsthalNum(int n);
 	
 	public:
 		PmergeMe(int argc, char **argv);
@@ -21,7 +23,7 @@ class PmergeMe
 		PmergeMe(const PmergeMe &other);
 		PmergeMe &operator=(const PmergeMe &other);
 
-		void sortVector();
+		std::vector<int>	sortVector(std::vector<int> &input);
 		void sortDeque();
 		void printNumbers(const std::string &containerName) const;
 };

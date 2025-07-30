@@ -10,6 +10,9 @@ PmergeMe::PmergeMe(int argc, char **argv)
 	this->parseArguments(argc, argv);
 	std::cout << "Before: ";
 	this->printNumbers("Vector");
+	this->_vec = this->sortVector(this->_vec);
+	std::cout << std::endl << "After: ";
+	this->printNumbers("Vector");
 	std::cout << std::endl;
 }
 
@@ -81,6 +84,48 @@ void PmergeMe::printNumbers(const std::string &containerName) const
 		}
 	}
 }
+
+int	PmergeMe::getJacobsthalNum(int n)
+{
+	if (n < 0)
+	{
+		throw std::invalid_argument("Negative index for Jacobsthal number.");
+	}
+	if (n == 0)
+		return 0;
+	if (n == 1)
+		return 1;
+	return getJacobsthalNum(n - 1) + 2 * getJacobsthalNum(n - 2);
+}
+
+std::vector<int>	PmergeMe::sortVector(std::vector<int> &input)
+{
+	std::vector<int> mainChain;
+	std::vector<int> pendChain;
+
+	if (input.size() < 2)
+	{
+		return input;
+	}
+	for (size_t i = 0; i + 1 < input.size(); i += 2)
+	{
+		if (input[i] > input[i + 1])
+		{
+			mainChain.push_back(input[i]);
+			pendChain.push_back(input[i + 1]);
+		}
+		else
+		{
+			mainChain.push_back(input[i + 1]);
+			pendChain.push_back(input[i]);
+		}
+	}
+	if (input.size() % 2 != 0)
+		pendChain.push_back(input.back());
+	std::vector<int> sorted = sortVector(mainChain);
+	return sorted;
+}
+
 Validator::Validator() {}
 
 Validator::~Validator() {}
