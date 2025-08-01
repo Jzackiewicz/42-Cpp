@@ -5,13 +5,9 @@
 
 int	main(int argc, char **argv)
 {
-	clock_t start, end;
-
-	start = clock();
 	try
 	{
 		PmergeMe pmergeMe(argc, argv);
-		end = clock();
 	}
 	catch (const std::exception &e)
 	{

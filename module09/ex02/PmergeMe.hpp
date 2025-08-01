@@ -5,6 +5,11 @@
 #include <string>
 #include <stdexcept>
 #include <sstream>
+#include <iostream>
+#include <cstdlib>
+#include <limits>
+#include <algorithm>
+#include <ctime>
 
 class PmergeMe
 {
@@ -12,10 +17,15 @@ class PmergeMe
 		std::vector<int>	_vec;
 		std::deque<int>		_deq;
 
-		int			loadArgument(const std::string &arg);
+		void		loadArgument(const std::string &arg);
 		void		parseArguments(int argc, char **argv);
 		
-		static int	getJacobsthalNum(int n);
+		static int			getJacobsthalNum(int n);
+		std::vector<int>	getJacobsthalOrder(int n);
+		void				insertPendChainVector(std::vector<int> &mainChain,
+											std::vector<int> &pendChain);
+		void				insertPendChainDeque(std::deque<int> &mainChain,
+											std::deque<int> &pendChain);
 	
 	public:
 		PmergeMe(int argc, char **argv);
@@ -24,7 +34,8 @@ class PmergeMe
 		PmergeMe &operator=(const PmergeMe &other);
 
 		std::vector<int>	sortVector(std::vector<int> &input);
-		void sortDeque();
+		std::deque<int>		sortDeque(std::deque<int> &input);
+		
 		void printNumbers(const std::string &containerName) const;
 };
 
