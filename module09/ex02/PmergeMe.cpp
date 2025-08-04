@@ -14,21 +14,19 @@ PmergeMe::PmergeMe(int argc, char **argv)
 
 	this->_vec = this->sortVector(this->_vec);
 	end = clock();
-	timeTakenVec = 10000 * static_cast<double>(end - start) / CLOCKS_PER_SEC;
+	timeTakenVec = 1000 * static_cast<double>(end - start) / CLOCKS_PER_SEC;
 
 	start = clock();
-	this->_deq = this->sortDeque(this->_deq);
+	this->_lst = this->sortList(this->_lst);
 	end = clock();
-	timeTakenDeq = 10000 * static_cast<double>(end - start) / CLOCKS_PER_SEC;
-	
-	std::cout << std::endl << "After: ";
+	timeTakenDeq = 1000 * static_cast<double>(end - start) / CLOCKS_PER_SEC;
+	std::cout << "After: ";
 	this->printNumbers("vector");
 
 	std::cout << "Time to process a range of " << this->_vec.size() << " elements with std::vector: "
-			  << timeTakenVec << " us" << std::endl;
-	std::cout << "Time to process a range of " << this->_deq.size() << " elements with std::deque: "
+			  << timeTakenVec  << " us" << std::endl;
+	std::cout << "Time to process a range of " << this->_lst.size() << " elements with std::list: "
 			  << timeTakenDeq << " us" << std::endl;
-	std::cout << std::endl;
 }
 
 PmergeMe::~PmergeMe() {}
@@ -36,7 +34,7 @@ PmergeMe::~PmergeMe() {}
 PmergeMe::PmergeMe(const PmergeMe &other)
 {
 	this->_vec = other._vec;
-	this->_deq = other._deq;
+	this->_lst = other._lst;
 }
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other)
@@ -44,7 +42,7 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 	if (this != &other)
 	{
 		this->_vec = other._vec;
-		this->_deq = other._deq;
+		this->_lst = other._lst;
 	}
 	return (*this);
 }
@@ -58,9 +56,9 @@ void	PmergeMe::loadArgument(const std::string &arg)
 	value = std::strtol(arg.c_str(), &endptr, 10);
 	Validator::isINT(value, endptr);
 	Validator::isDuplicate(static_cast<int>(value), this->_vec);
-	Validator::isDuplicate(static_cast<int>(value), this->_deq);
+	Validator::isDuplicate(static_cast<int>(value), this->_lst);
 	this->_vec.push_back(static_cast<int>(value));
-	this->_deq.push_back(static_cast<int>(value));
+	this->_lst.push_back(static_cast<int>(value));
 }
 
 void PmergeMe::parseArguments(int argc, char **argv)
@@ -78,20 +76,32 @@ void PmergeMe::parseArguments(int argc, char **argv)
 void PmergeMe::printNumbers(const std::string &containerName) const
 {
 	std::vector<int>::const_iterator	vecIt;
-	std::deque<int>::const_iterator		deqIt;
-
+	std::list<int>::const_iterator		deqIt;
+	int 								count = 0;
 	if (containerName == "vector")
 	{
 		for (vecIt = this->_vec.begin(); vecIt != this->_vec.end(); ++vecIt)
 		{
 			std::cout << *vecIt << " ";
+			count++;
+			if (count == 5)
+			{
+				std::cout << "[...]";
+				break;
+			}
 		}
 	}
 	else
 	{
-		for (deqIt = this->_deq.begin(); deqIt != this->_deq.end(); ++deqIt)
+		for (deqIt = this->_lst.begin(); deqIt != this->_lst.end(); ++deqIt)
 		{
 			std::cout << *deqIt << " ";
+			count++;
+			if (count == 5)
+			{
+				std::cout << "[...]";
+				break;
+			}
 		}
 	}
 	std::cout << std::endl;
@@ -161,10 +171,10 @@ std::vector<int>	PmergeMe::sortVector(std::vector<int> &input)
 	return (sorted);
 }
 
-std::deque<int> PmergeMe::sortDeque(std::deque<int> &input)
+std::list<int> PmergeMe::sortList(std::list<int> &input)
 {
-	std::deque<int> mainChain;
-	std::deque<int> pendChain;
+	std::list<int> mainChain;
+	std::list<int> pendChain;
 
 	if (input.size() < 2)
 	{
@@ -185,8 +195,8 @@ std::deque<int> PmergeMe::sortDeque(std::deque<int> &input)
 	}
 	if (input.size() % 2 != 0)
 		pendChain.push_back(input.back());
-	std::deque<int> sorted = sortDeque(mainChain);
-	this->insertPendChainDeque(sorted, pendChain);
+	std::list<int> sorted = sortList(mainChain);
+	this->insertPendChainList(sorted, pendChain);
 	return (sorted);
 }
 
@@ -202,15 +212,22 @@ void	PmergeMe::insertPendChainVector(std::vector<int> &mainChain, std::vector<in
 	}
 }
 
-void	PmergeMe::insertPendChainDeque(std::deque<int> &mainChain, std::deque<int> &pendChain)
+void	PmergeMe::insertPendChainList(std::list<int> &mainChain, std::list<int> &pendChain)
 {
-        std::vector<int> order = this->getJacobsthalOrder(pendChain.size());
+    std::vector<int> order = this->getJacobsthalOrder(pendChain.size());
 
-        for (size_t i = 0; i < order.size(); ++i) {
-            int value = pendChain[order[i]];
-            std::deque<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), value);
-            mainChain.insert(it, value);
-        }
+    for (std::vector<int>::size_type i = 0; i < order.size(); ++i)
+    {
+        std::list<int>::iterator pit = pendChain.begin();
+        for (int j = 0; j < order[i]; ++j)
+            ++pit;
+
+        int value = *pit;
+
+        std::list<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), value);
+
+        mainChain.insert(it, value);
+    }
 }
 
 Validator::Validator() {}

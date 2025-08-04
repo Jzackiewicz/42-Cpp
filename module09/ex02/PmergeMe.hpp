@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <deque>
+#include <list>
 #include <string>
 #include <stdexcept>
 #include <sstream>
@@ -10,12 +10,13 @@
 #include <limits>
 #include <algorithm>
 #include <ctime>
+#include <iomanip>
 
 class PmergeMe
 {
 	private:
 		std::vector<int>	_vec;
-		std::deque<int>		_deq;
+		std::list<int>		_lst;
 
 		void		loadArgument(const std::string &arg);
 		void		parseArguments(int argc, char **argv);
@@ -24,8 +25,8 @@ class PmergeMe
 		std::vector<int>	getJacobsthalOrder(int n);
 		void				insertPendChainVector(std::vector<int> &mainChain,
 											std::vector<int> &pendChain);
-		void				insertPendChainDeque(std::deque<int> &mainChain,
-											std::deque<int> &pendChain);
+		void				insertPendChainList(std::list<int> &mainChain,
+											std::list<int> &pendChain);
 	
 	public:
 		PmergeMe(int argc, char **argv);
@@ -34,7 +35,7 @@ class PmergeMe
 		PmergeMe &operator=(const PmergeMe &other);
 
 		std::vector<int>	sortVector(std::vector<int> &input);
-		std::deque<int>		sortDeque(std::deque<int> &input);
+		std::list<int>		sortList(std::list<int> &input);
 		
 		void printNumbers(const std::string &containerName) const;
 };
