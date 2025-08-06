@@ -3,30 +3,7 @@
 
 PmergeMe::PmergeMe(int argc, char **argv)
 {
-	clock_t start, end;
-	double timeTakenVec, timeTakenDeq;
-
-
 	this->parseArguments(argc, argv);
-	std::cout << "Before: ";
-	this->printNumbers("vector");
-	start = clock();
-
-	this->_vec = this->sortVector(this->_vec);
-	end = clock();
-	timeTakenVec = 1000 * static_cast<double>(end - start) / CLOCKS_PER_SEC;
-
-	start = clock();
-	this->_lst = this->sortList(this->_lst);
-	end = clock();
-	timeTakenDeq = 1000 * static_cast<double>(end - start) / CLOCKS_PER_SEC;
-	std::cout << "After: ";
-	this->printNumbers("vector");
-
-	std::cout << "Time to process a range of " << this->_vec.size() << " elements with std::vector: "
-			  << timeTakenVec  << " us" << std::endl;
-	std::cout << "Time to process a range of " << this->_lst.size() << " elements with std::list: "
-			  << timeTakenDeq << " us" << std::endl;
 }
 
 PmergeMe::~PmergeMe() {}
@@ -45,6 +22,29 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 		this->_lst = other._lst;
 	}
 	return (*this);
+}
+
+double	PmergeMe::sortAndMeasure(ContainerType type)
+{
+	clock_t		start, end;
+	double		timeTaken;
+
+	start = clock();
+	if (type == VECTOR)
+		this->_vec = this->sortVector(this->_vec);
+	else if (type == LIST)
+		this->_lst = this->sortList(this->_lst);
+	end = clock();
+
+	timeTaken = 1000000.0 * static_cast<double>(end - start) / CLOCKS_PER_SEC;
+	return (timeTaken);
+}
+
+void	PmergeMe::printTime(ContainerType type, double timeTaken) const
+{
+	std::string containerName = (type == VECTOR) ? "std::vector" : "std::list";
+	std::cout << "Time to process a range of " << ((type == VECTOR) ? this->_vec.size() : this->_lst.size())
+			  << " elements with " << containerName << ": " << timeTaken << " us" << std::endl;
 }
 
 void	PmergeMe::loadArgument(const std::string &arg)
@@ -73,12 +73,13 @@ void PmergeMe::parseArguments(int argc, char **argv)
 	}
 }
 
-void PmergeMe::printNumbers(const std::string &containerName) const
+void PmergeMe::printNumbers(ContainerType type) const
 {
 	std::vector<int>::const_iterator	vecIt;
-	std::list<int>::const_iterator		deqIt;
+	std::list<int>::const_iterator		lstIt;
 	int 								count = 0;
-	if (containerName == "vector")
+	
+	if (type == VECTOR)
 	{
 		for (vecIt = this->_vec.begin(); vecIt != this->_vec.end(); ++vecIt)
 		{
@@ -93,9 +94,9 @@ void PmergeMe::printNumbers(const std::string &containerName) const
 	}
 	else
 	{
-		for (deqIt = this->_lst.begin(); deqIt != this->_lst.end(); ++deqIt)
+		for (lstIt = this->_lst.begin(); lstIt != this->_lst.end(); ++lstIt)
 		{
-			std::cout << *deqIt << " ";
+			std::cout << *lstIt << " ";
 			count++;
 			if (count == 5)
 			{
@@ -148,9 +149,7 @@ std::vector<int>	PmergeMe::sortVector(std::vector<int> &input)
 	std::vector<int> pendChain;
 
 	if (input.size() < 2)
-	{
 		return (input);
-	}
 	for (size_t i = 0; i + 1 < input.size(); i += 2)
 	{
 		if (input[i] > input[i + 1])
@@ -173,32 +172,43 @@ std::vector<int>	PmergeMe::sortVector(std::vector<int> &input)
 
 std::list<int> PmergeMe::sortList(std::list<int> &input)
 {
-	std::list<int> mainChain;
-	std::list<int> pendChain;
+    std::list<int> mainChain;
+    std::list<int> pendChain;
 
-	if (input.size() < 2)
-	{
-		return input;
-	}
-	for (size_t i = 0; i + 1 < input.size(); i += 2)
-	{
-		if (input[i] > input[i + 1])
-		{
-			mainChain.push_back(input[i]);
-			pendChain.push_back(input[i + 1]);
-		}
-		else
-		{
-			mainChain.push_back(input[i + 1]);
-			pendChain.push_back(input[i]);
-		}
-	}
-	if (input.size() % 2 != 0)
-		pendChain.push_back(input.back());
-	std::list<int> sorted = sortList(mainChain);
-	this->insertPendChainList(sorted, pendChain);
-	return (sorted);
+    if (input.size() < 2)
+        return input;
+    std::list<int>::iterator it = input.begin();
+    while (it != input.end())
+    {
+        std::list<int>::iterator next = it;
+        ++next;
+        if (next != input.end())
+        {
+            if (*it > *next)
+            {
+                mainChain.push_back(*it);
+                pendChain.push_back(*next);
+            }
+            else
+            {
+                mainChain.push_back(*next);
+                pendChain.push_back(*it);
+            }
+            ++it;
+            ++it;
+        }
+        else
+        {
+            pendChain.push_back(*it);
+            break;
+        }
+    }
+
+    mainChain = sortList(mainChain);
+    insertPendChainList(mainChain, pendChain);
+    return (mainChain);
 }
+
 
 void	PmergeMe::insertPendChainVector(std::vector<int> &mainChain, std::vector<int> &pendChain)
 {
@@ -238,7 +248,7 @@ Validator::Validator(const Validator &) {}
 
 Validator &Validator::operator=(const Validator &)
 {
-	return *this;
+	return (*this);
 }
 
 void Validator::isNumber(const std::string &arg)

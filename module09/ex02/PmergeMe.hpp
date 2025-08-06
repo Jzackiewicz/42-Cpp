@@ -12,6 +12,12 @@
 #include <ctime>
 #include <iomanip>
 
+enum ContainerType
+{
+	VECTOR,
+	LIST
+};
+
 class PmergeMe
 {
 	private:
@@ -37,7 +43,9 @@ class PmergeMe
 		std::vector<int>	sortVector(std::vector<int> &input);
 		std::list<int>		sortList(std::list<int> &input);
 		
-		void printNumbers(const std::string &containerName) const;
+		double				sortAndMeasure(ContainerType type);
+		void				printNumbers(ContainerType type) const;
+		void				printTime(ContainerType type, double timeTaken) const;
 };
 
 class Validator
